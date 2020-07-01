@@ -11,6 +11,8 @@ struct ContentView: View {
     
     @State private var todos = Array(0..<100).map { _ in UUID().uuidString }
     
+    @State private var showNewTodo = false
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -18,10 +20,11 @@ struct ContentView: View {
                     ForEach(todos, id: \.self) { todo in
                        Text(todo)
                     }
+                    .onDelete(perform: deleteTodo)
                 }
                 VStack {
                     Spacer()
-                    Button(action: {}, label: {
+                    Button(action: { showNewTodo.toggle() }, label: {
                         Image(systemName: "plus")
                             .padding()
                             .foregroundColor(Color.white)
@@ -33,7 +36,14 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Todo")
+            .sheet(isPresented: $showNewTodo) {
+                NewTodoView(isPresented: self.$showNewTodo)
+            }
         }
+    }
+    
+    private func deleteTodo(at indexSet: IndexSet) {
+        print("Delete item at \(indexSet)")
     }
 }
 

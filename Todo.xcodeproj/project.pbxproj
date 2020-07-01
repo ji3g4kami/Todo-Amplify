@@ -11,6 +11,7 @@
 		14C1608B24AC99D500BE475C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1608A24AC99D500BE475C /* ContentView.swift */; };
 		14C1608D24AC99D800BE475C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C1608C24AC99D800BE475C /* Assets.xcassets */; };
 		14C1609024AC99D800BE475C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14C1608F24AC99D800BE475C /* Preview Assets.xcassets */; };
+		14C1609824AC9DF800BE475C /* NewTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1609724AC9DF800BE475C /* NewTodoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		14C1608C24AC99D800BE475C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14C1608F24AC99D800BE475C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		14C1609124AC99D800BE475C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14C1609724AC9DF800BE475C /* NewTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTodoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				14C1608824AC99D500BE475C /* TodoApp.swift */,
 				14C1608A24AC99D500BE475C /* ContentView.swift */,
+				14C1609724AC9DF800BE475C /* NewTodoView.swift */,
 				14C1608C24AC99D800BE475C /* Assets.xcassets */,
 				14C1609124AC99D800BE475C /* Info.plist */,
 				14C1608E24AC99D800BE475C /* Preview Content */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14C1609824AC9DF800BE475C /* NewTodoView.swift in Sources */,
 				14C1608B24AC99D500BE475C /* ContentView.swift in Sources */,
 				14C1608924AC99D500BE475C /* TodoApp.swift in Sources */,
 			);
