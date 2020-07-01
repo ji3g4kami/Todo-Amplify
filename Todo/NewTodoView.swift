@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Amplify
 
 struct NewTodoView: View {
     
@@ -37,6 +38,18 @@ struct NewTodoView: View {
     
     private func saveTodo() {
         print(text)
+        
+        let todo = Todo(body: text)
+        
+        Amplify.DataStore.save(todo) { result in
+            switch result {
+            case .success:
+                print("save todo")
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
         self.isPresented = false
     }
 }

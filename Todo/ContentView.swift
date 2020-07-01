@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import Amplify
+import Combine
 
 struct ContentView: View {
     
-    @State private var todos = Array(0..<100).map { _ in UUID().uuidString }
+    @State private var todos = [Todo]()
     
     @State private var showNewTodo = false
+    
+    @State private var observationToken: AnyCancellable?
     
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(todos, id: \.self) { todo in
-                       Text(todo)
+                    ForEach(todos) { todo in
+                        Text(todo.body)
                     }
                     .onDelete(perform: deleteTodo)
                 }
@@ -40,10 +44,66 @@ struct ContentView: View {
                 NewTodoView(isPresented: self.$showNewTodo)
             }
         }
+        .onAppear {
+            getTodos()
+            observeTodos()
+        }
+    }
+    
+    private func getTodos() {
+        Amplify.DataStore.query(Todo.self) { result in
+            switch result {
+            case .success(let todos):
+                print(todos)
+                self.todos = todos
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func observeTodos() {
+        observationToken = Amplify.DataStore.publisher(for: Todo.self).sink { completion in
+            if case .failure(let error) = completion {
+                print(error)
+            }
+        } receiveValue: { changes in
+            
+            guard let todo = try? changes.decodeModel(as: Todo.self) else { return }
+            
+            switch changes.mutationType {
+            case "create":
+                self.todos.append(todo)
+            case "delete":
+                if let index = self.todos.firstIndex(of: todo) {
+                    self.todos.remove(at: index)
+                }
+            default:
+                break
+            }
+        }
+
     }
     
     private func deleteTodo(at indexSet: IndexSet) {
         print("Delete item at \(indexSet)")
+        
+        var updatedTodos = todos
+        updatedTodos.remove(atOffsets: indexSet)
+        
+        guard let todo = Set(updatedTodos).symmetricDifference(todos).first else {
+            return
+        }
+        
+        Amplify.DataStore.delete(todo) { result in
+            switch result {
+            case .success:
+                print("Deleted todo")
+            case .failure(let error):
+                print("Could not delete todo - \(error)")
+            }
+        }
+        
     }
 }
 
